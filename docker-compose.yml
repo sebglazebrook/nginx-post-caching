@@ -1,0 +1,19 @@
+version: '3.1'
+
+services:
+  appserver:
+    build: .
+    ports:
+      - 9999:8080
+    volumes:
+      - .:/code
+    command: "/code/start-server"
+
+  proxy:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 6969:8080
+    depends_on:
+      - appserver
